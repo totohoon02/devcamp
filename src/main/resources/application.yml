@@ -2,17 +2,23 @@ spring:
   jpa:
     database: h2
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     open-in-view: false
     properties:
       hibernate:
         show_sql: true
         format_sql: true
   datasource:
-    url: jdbc:h2:mem:myDevCamp
+    url: jdbc:h2:~/mydevcamp
     username: sa
     password:
     driver-class-name: org.h2.Driver
   h2:
     console:
       enabled: true
+
+
+jwt:
+  secret:
+    key: 7ZiE7JeF7JeQ7ISc7JuQ7ZWY64qU7KO864uI7Ja06rCc67Cc7J6Q66W87Jyh7ISx7ZWY6riw7JyE7ZW07YyA7Iqk7YyM66W07YOA7JeQ7ISc7KeE7ZaJ7ZWY64qU642w67iM7Lqg7ZSE
+

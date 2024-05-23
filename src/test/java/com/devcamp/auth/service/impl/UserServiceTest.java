@@ -4,14 +4,11 @@ import com.devcamp.auth.entity.User;
 import com.devcamp.auth.entity.UserRole;
 import com.devcamp.auth.repository.UserRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceTest {
@@ -31,4 +28,5 @@ class UserServiceTest {
         Assertions.assertThat(optionalUser).isPresent();
         Assertions.assertThat(optionalUser.get().getId()).isEqualTo(user.getId());
     }
+    
 }
