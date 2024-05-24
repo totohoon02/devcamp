@@ -33,16 +33,13 @@ public class WebSecurityConfig {
     // Security 인증 객체 관리
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        System.out.println(configuration);
         return configuration.getAuthenticationManager();
     }
 
     // 인증 필터
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        System.out.println(jwtProvider);
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtProvider);
-        System.out.println(authenticationConfiguration);
         filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
         return filter;
     }

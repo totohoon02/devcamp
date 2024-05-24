@@ -36,24 +36,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             LoginRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
 
-            System.out.println(requestDto.getEmail());
-            System.out.println(requestDto.getPassword());
-
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                    requestDto.getEmail(),
-                    requestDto.getPassword()
+            return getAuthenticationManager().authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            requestDto.getEmail(),
+                            requestDto.getPassword(),
+                            null
+                    )
             );
-
-            System.out.println(token);
-            AuthenticationManager authenticationManager = getAuthenticationManager();
-
-            System.out.println("1231212" + authenticationManager);
-
-            Authentication authentication = authenticationManager.authenticate(token);
-
-            System.out.println(authentication);
-            // name,pw를 이용해 Authentication 반환
-            return authentication;
         } catch (IOException e) {
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
@@ -62,8 +51,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        System.out.println(1111);
         User user = ((UserDetailsImpl) authResult.getPrincipal()).getUser();
+
         String email = user.getEmail();
         String accessToken = jwtProvider.createToken(jwtProvider.createTokenPayLoad(email, TokenType.ACCESS));
         String refreshToken = jwtProvider.createToken(jwtProvider.createTokenPayLoad(email, TokenType.REFRESH));
@@ -75,7 +64,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        System.out.println(2222);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
     }
 }
